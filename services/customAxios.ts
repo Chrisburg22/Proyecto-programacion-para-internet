@@ -2,7 +2,7 @@ import axios from 'axios';
 // import { getJwt, setJwt } from './jwt';
 
 const customAxios = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: 'http://10.0.2.2:4000',
 });
 
 customAxios.defaults.headers.common['Accept'] = 'application/json';

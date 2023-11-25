@@ -17,22 +17,27 @@ export default class Navegacion extends Component {
     const Stack = createNativeStackNavigator();
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='inicio'>
+        <Stack.Navigator initialRouteName="inicio">
           <Stack.Screen
             name="inicio"
             component={INICIO}
-            options={{headerShown: true}}
+            options={{headerShown: false}}
           />
-           <Stack.Screen
+          <Stack.Screen
             name="login"
             component={Login}
-            options={{headerShown: true}}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="menu"
             component={MENU}
-            options={{headerShown: true}}
+            options={{headerShown: false}}
           />
+          {/* <Stack.Screen
+            name="menu"
+            component={}
+            options={{headerShown: false}}
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     );

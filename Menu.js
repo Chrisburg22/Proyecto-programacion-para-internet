@@ -24,7 +24,7 @@ export default class Menu extends Component {
         }}>
         <Tab.Screen
           name="Elecciones"
-          component={Elecciones}
+          component={TAB1}
           //initialParams={{nombre:this.props.route.params.nombre}}
           options={{
             headerShown: false,

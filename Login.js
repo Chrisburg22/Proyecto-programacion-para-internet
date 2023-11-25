@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, TextInput, Modal} from 'react-native';
 import {NavigationContext} from '@react-navigation/native';
 import {autentificarUsuario, CreateUser} from './services/index';
-import axios from 'axios';
+import axios from 'react-native-axios';
+import {EventSubscriptionVendor} from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
 export default class Login extends Component {
   static contextType = NavigationContext;
@@ -14,7 +15,7 @@ export default class Login extends Component {
       modalVentana_Facebook: false,
       nombre: '',
       correo: '',
-      password: '',
+      contraseña: '',
     };
   }
 
@@ -25,44 +26,19 @@ export default class Login extends Component {
       this.setState({modalVentana_Correo: true});
     };
 
-    // const facebook = () => {
-    //     this.setState({modalVentana_Facebook:true})
-    // }
-
     const modalCierra = async () => {
-      // let xhttp = new XMLHttpRequest();
-      // xhttp.onreadystatechange = function () {
-      //   if (this.readyState == 4 && this.status == 200) {
-      //     // Typical action to be performed when the document is ready:
-      //     console.log(xhttp.responseText);
-      //     if (xhttp.responseText == '1') {
-      //       alert('Inscripción exitosa');
-      //     } else {
-      //       alert('Error al inscribirse');
-      //     }
-      //     this.setState({
-      //       modalVentana_Correo: false,
-      //       modalVentana_Facebook: false,
-      //     });
-      //   }
-      // };
-      // xhttp.open("GET", "http://claseprogranataly.000webhostapp.com/datos.php?Nombre=+this.state.nombre+&Correo=+this.state.correo+&Password=+this.state.password", true);
-      // xhttp.send();
-      const usuario = {
-        correo: this.state.correo,
-        contraseña: this.state.contraseña,
-      };
       try {
-        // const usuarioDB = await autentificarUsuario(usuario);
-        const usuarioDB = await axios({
-          baseURL: 'http://localhost:4000/vota-app/autentificar',
-          method: 'POST',
-          data: usuario,
-        });
+        const usuario = {
+          correo: this.state.correo,
+          contraseña: this.state.contraseña,
+        };
+        const usuarioDB = await autentificarUsuario(usuario);
         if (!usuarioDB) {
-          // navigation.navigate('menu');
+          alert('Correo o contraseña incorrecta');
+        } else {
+          alert(`Bienvenido`);
+          navigation.navigate('menu');
         }
-        console.log('Diste click al boton de EMAIL!!');
       } catch (error) {
         console.log(`Error: ${error}`);
       }
@@ -105,25 +81,6 @@ export default class Login extends Component {
           </Text>
         </TouchableOpacity>
 
-        {/* <TouchableOpacity style={{
-            borderWidth:2,
-            width:300,
-            height:50,
-            backgroundColor:"white",
-            borderRadius:40,
-            marginLeft:40,
-            marginTop:30,
-            }} onPress={facebook}>
-
-            <Text style={{
-                fontSize:23, 
-                color:"black",
-                textAlign:"center",
-                marginTop:5,
-            
-            }}>Inscripción por FaceBook</Text>
-        </TouchableOpacity> */}
-
         <Modal
           transparent={true}
           visible={this.state.modalVentana_Correo}
@@ -156,7 +113,7 @@ export default class Login extends Component {
               Password:{' '}
             </Text>
             <TextInput
-              onChangeText={password => this.setState({password})}
+              onChangeText={contraseña => this.setState({contraseña})}
               style={{
                 padding: '4px',
                 borderWidth: 1,
