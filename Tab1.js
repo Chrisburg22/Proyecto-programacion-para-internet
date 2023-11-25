@@ -3,11 +3,9 @@ import React, {Component} from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {obtenerAcuerdos} from './services';
 import {AppContext} from './App';
-import {NavigationContext} from '@react-navigation/native';
 
 export default class Tab1 extends Component {
   static contextType = AppContext;
-  static contextNaigate = NavigationContext;
 
   constructor(props) {
     super(props);
@@ -30,7 +28,6 @@ export default class Tab1 extends Component {
 
   render() {
     const {data, isLoading} = this.state;
-    const navigation = this.context.contextNaigate;
 
     console.log(data);
     if (isLoading) {
@@ -39,7 +36,7 @@ export default class Tab1 extends Component {
 
     const manegarEleeccionAcuerdo = id => {
       this.context.setAcuerdoId(id);
-      // navigation.navigate('Perfil');
+      this.props.navigation.navigate('Perfil');
       console.log(id);
     };
     return (
